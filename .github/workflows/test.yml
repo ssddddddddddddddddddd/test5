@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with: { 'node-version': '16' }
+      - name: Install deps
+        run: npm i
+      - name: Install fetch
+        run: npm install node-fetch@2 
+      - name: Run server
+        run: node src/index.js &
+      - name: Run tests
+        run: node tests/time-nonzero.test.js
